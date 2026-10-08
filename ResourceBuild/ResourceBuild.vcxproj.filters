@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Textures">
+      <UniqueIdentifier>{cda39ddc-46d1-4b88-a38c-efe17e893a0e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Models">
+      <UniqueIdentifier>{64d3c325-defb-4f05-8fd9-b13d316840e3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="PropertySheet.props" />
+    <None Include="TOOLS\CmoPathCut.bat" />
+    <None Include="TOOLS\CmoPathCut.exe" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="TOOLS\CmoPathCutの使い方.txt" />
+  </ItemGroup>
+</Project>

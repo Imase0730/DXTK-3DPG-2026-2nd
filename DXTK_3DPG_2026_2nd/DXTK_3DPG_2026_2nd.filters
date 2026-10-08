@@ -1,0 +1,288 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Common">
+      <UniqueIdentifier>0a10036e-fcdb-4a49-a08a-13864e979efe</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>82dfe5c5-8c01-43ab-a1d7-5771ebc08d65</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dds;dlg;fbx;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="DirectXTK_Utilities">
+      <UniqueIdentifier>{62232684-3e16-4940-8c33-f7816aaeb412}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ImaseLib">
+      <UniqueIdentifier>{371e118e-7ffe-4c4c-8b71-81157594e2c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ImaseLib\Transition">
+      <UniqueIdentifier>{d2d25d05-60fb-49e7-997b-5c18993e297d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{c087f712-e768-4fc7-bb3d-e5a7cc711c51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ImGui">
+      <UniqueIdentifier>{0809d9de-768c-4bd2-9cc9-c98f15573258}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\BaseScene">
+      <UniqueIdentifier>{43943a32-4958-466c-b82f-685f690e1d33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ImaseLib\Shaders">
+      <UniqueIdentifier>{38edb435-2318-4d4f-a907-d1792eea16ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\TitleScene">
+      <UniqueIdentifier>{9d45fb0a-47b3-4695-8c67-243883e865bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\GameScene">
+      <UniqueIdentifier>{dcfd6036-e9d8-4b60-9902-94136d6cbe98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\ShaderTestScene">
+      <UniqueIdentifier>{1b5461cb-f5fa-42ce-b0ba-f2aabd8d0dd6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="StepTimer.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviceResources.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXTK_Utilities\ReadData.h">
+      <Filter>DirectXTK_Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="ImaseLib\SceneManager.h">
+      <Filter>ImaseLib</Filter>
+    </ClInclude>
+    <ClInclude Include="ImaseLib\Transition\TransitionController.h">
+      <Filter>ImaseLib\Transition</Filter>
+    </ClInclude>
+    <ClInclude Include="ImaseLib\Transition\ITransitionEffect.h">
+      <Filter>ImaseLib\Transition</Filter>
+    </ClInclude>
+    <ClInclude Include="ImaseLib\Transition\ITransitionRenderer.h">
+      <Filter>ImaseLib\Transition</Filter>
+    </ClInclude>
+    <ClInclude Include="ImaseLib\Transition\MaskTransitionEffect.h">
+      <Filter>ImaseLib\Transition</Filter>
+    </ClInclude>
+    <ClInclude Include="ImaseLib\Transition\MaskTransitionResources.h">
+      <Filter>ImaseLib\Transition</Filter>
+    </ClInclude>
+    <ClInclude Include="ImaseLib\Transition\TransitionEffects.h">
+      <Filter>ImaseLib\Transition</Filter>
+    </ClInclude>
+    <ClInclude Include="ImaseLib\Transition\TransitionRenderer.h">
+      <Filter>ImaseLib\Transition</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXTK_Utilities\RenderTexture.h">
+      <Filter>DirectXTK_Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="GameContext.h" />
+    <ClInclude Include="Scene\SceneId.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="ImaseLib\CollisionRenderer.h">
+      <Filter>ImaseLib</Filter>
+    </ClInclude>
+    <ClInclude Include="ImaseLib\DebugCamera.h">
+      <Filter>ImaseLib</Filter>
+    </ClInclude>
+    <ClInclude Include="ImaseLib\DebugRenderer.h">
+      <Filter>ImaseLib</Filter>
+    </ClInclude>
+    <ClInclude Include="ImaseLib\GridFloor.h">
+      <Filter>ImaseLib</Filter>
+    </ClInclude>
+    <ClInclude Include="ImaseLib\InputManager.h">
+      <Filter>ImaseLib</Filter>
+    </ClInclude>
+    <ClInclude Include="ImaseLib\ModelCollision.h">
+      <Filter>ImaseLib</Filter>
+    </ClInclude>
+    <ClInclude Include="ImaseLib\ObjCollision.h">
+      <Filter>ImaseLib</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXTK_Utilities\DebugDraw.h">
+      <Filter>DirectXTK_Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imconfig.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imgui.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imgui_impl_dx11.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imgui_impl_win32.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imgui_internal.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imstb_rectpack.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imstb_textedit.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imstb_truetype.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImaseLib\DirectXTK_ImGui.h">
+      <Filter>ImaseLib</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\BaseScene\BaseScene.h">
+      <Filter>Scene\BaseScene</Filter>
+    </ClInclude>
+    <ClInclude Include="ImaseLib\Collision.h">
+      <Filter>ImaseLib</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\GameScene\GameScene.h">
+      <Filter>Scene\GameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\GameScene\Robot.h">
+      <Filter>Scene\GameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\TitleScene\TitleScene.h">
+      <Filter>Scene\TitleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\ShaderTestScene\ShaderTestScene.h">
+      <Filter>Scene\ShaderTestScene</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="DeviceResources.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="ImaseLib\Transition\MaskTransitionEffect.cpp">
+      <Filter>ImaseLib\Transition</Filter>
+    </ClCompile>
+    <ClCompile Include="ImaseLib\Transition\MaskTransitionResources.cpp">
+      <Filter>ImaseLib\Transition</Filter>
+    </ClCompile>
+    <ClCompile Include="ImaseLib\Transition\TransitionController.cpp">
+      <Filter>ImaseLib\Transition</Filter>
+    </ClCompile>
+    <ClCompile Include="ImaseLib\Transition\TransitionRenderer.cpp">
+      <Filter>ImaseLib\Transition</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXTK_Utilities\RenderTexture.cpp">
+      <Filter>DirectXTK_Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="ImaseLib\CollisionRenderer.cpp">
+      <Filter>ImaseLib</Filter>
+    </ClCompile>
+    <ClCompile Include="ImaseLib\DebugCamera.cpp">
+      <Filter>ImaseLib</Filter>
+    </ClCompile>
+    <ClCompile Include="ImaseLib\DebugRenderer.cpp">
+      <Filter>ImaseLib</Filter>
+    </ClCompile>
+    <ClCompile Include="ImaseLib\GridFloor.cpp">
+      <Filter>ImaseLib</Filter>
+    </ClCompile>
+    <ClCompile Include="ImaseLib\InputManager.cpp">
+      <Filter>ImaseLib</Filter>
+    </ClCompile>
+    <ClCompile Include="ImaseLib\ModelCollision.cpp">
+      <Filter>ImaseLib</Filter>
+    </ClCompile>
+    <ClCompile Include="ImaseLib\ObjCollision.cpp">
+      <Filter>ImaseLib</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXTK_Utilities\DebugDraw.cpp">
+      <Filter>DirectXTK_Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_demo.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_draw.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_impl_dx11.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_impl_win32.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_tables.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_widgets.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImaseLib\DirectXTK_ImGui.cpp">
+      <Filter>ImaseLib</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\BaseScene\BaseScene.cpp">
+      <Filter>Scene\BaseScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\GameScene\GameScene.cpp">
+      <Filter>Scene\GameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\GameScene\Robot.cpp">
+      <Filter>Scene\GameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\TitleScene\TitleScene.cpp">
+      <Filter>Scene\TitleScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\ShaderTestScene\ShaderTestScene.cpp">
+      <Filter>Scene\ShaderTestScene</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="resource.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="directx.ico">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Resources\Textures\Mask01.dds">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Resources\Textures\Mask02.dds">
+      <Filter>Assets</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Manifest Include="settings.manifest">
+      <Filter>Assets</Filter>
+    </Manifest>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="vcpkg-configuration.json" />
+    <None Include="vcpkg.json" />
+    <None Include="Directory.Build.props" />
+    <None Include=".gitignore" />
+    <None Include="imgui.ini" />
+    <None Include="PropertySheet.props" />
+    <None Include="ImaseLib\Shaders\FullScreen.hlsli">
+      <Filter>ImaseLib\Shaders</Filter>
+    </None>
+    <None Include="Resources\Font\SegoeUI_18.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="ImaseLib\Shaders\FullScreenTriangleVS.hlsl">
+      <Filter>ImaseLib\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="ImaseLib\Shaders\MaskTransitionPS.hlsl">
+      <Filter>ImaseLib\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Scene\ShaderTestScene\VertexShader.hlsl">
+      <Filter>Scene\ShaderTestScene</Filter>
+    </FxCompile>
+    <FxCompile Include="Scene\ShaderTestScene\PixelShader.hlsl">
+      <Filter>Scene\ShaderTestScene</Filter>
+    </FxCompile>
+  </ItemGroup>
+</Project>

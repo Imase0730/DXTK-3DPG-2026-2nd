@@ -1,0 +1,10 @@
+<Solution>
+  <Configurations>
+    <Platform Name="ARM64" />
+    <Platform Name="x64" />
+  </Configurations>
+  <Project Path="DXTK_3DPG_2026_2nd/DXTK_3DPG_2026_2nd.vcxproj" Id="a8a56abb-2d57-4543-bab6-c4e914ef3984" />
+  <Project Path="ResourceBuild/ResourceBuild.vcxproj" Id="5545423d-8772-49af-9986-5137761ac613">
+    <Platform Project="x64" />
+  </Project>
+</Solution>

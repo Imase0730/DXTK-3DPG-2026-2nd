@@ -1,0 +1,9 @@
+<Project>
+    <PropertyGroup>
+        <VcpkgManifestInstalledBaseDir>$(MSBuildProjectDirectory)\.vcpkg\i\</VcpkgManifestInstalledBaseDir>
+        <VcpkgAdditionalInstallOptions>--x-buildtrees-root="$(MSBuildProjectDirectory)\.vcpkg\b" --x-packages-root="$(MSBuildProjectDirectory)\.vcpkg\p"</VcpkgAdditionalInstallOptions>
+    </PropertyGroup>
+    <Target Name="CreateVcpkgBuildDirectories" BeforeTargets="VcpkgInstallManifestDependencies">
+        <MakeDir Directories="$(MSBuildProjectDirectory)\.vcpkg\b;$(MSBuildProjectDirectory)\.vcpkg\p" />
+    </Target>
+</Project>
