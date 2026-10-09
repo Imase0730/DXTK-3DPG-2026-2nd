@@ -28,14 +28,20 @@ public:
 
 private:
 
-    // 頂点バッファ
-    Microsoft::WRL::ComPtr<ID3D11Buffer> m_vertexBuffer;
+    // 頂点バッファの構造体
+    struct VertexPosition
+    {
+        DirectX::XMFLOAT3 position; // 位置
+    };
 
     // 定数バッファの構造体
     struct ConstantBuffer
     {
         DirectX::XMFLOAT4X4 wvp;    // ワールド行列×ビュー行列×プロジェクション行列
     };
+
+    // 頂点バッファ
+    Microsoft::WRL::ComPtr<ID3D11Buffer> m_vertexBuffer;
 
     // 定数バッファ
     Microsoft::WRL::ComPtr<ID3D11Buffer> m_constantBuffer;

@@ -95,11 +95,7 @@ void ShaderTestScene::Render(GameContext& gameContext)
 // シーン切り替え時に呼び出される関数
 void ShaderTestScene::OnEnter(GameContext& gameContext)
 {
-    // 頂点バッファの構造体
-    struct VertexPosition
-    {
-        DirectX::XMFLOAT3 position; // 位置
-    };
+    auto device = gameContext.deviceResources.GetD3DDevice();
 
     // 三角形の頂点データ
     VertexPosition vertexData[3] =
@@ -108,8 +104,6 @@ void ShaderTestScene::OnEnter(GameContext& gameContext)
         SimpleMath::Vector3( 0.0f, 1.0f, 0.0f),     // 1
         SimpleMath::Vector3( 1.0f, 0.0f, 0.0f),     // 2
     };
-
-    auto device = gameContext.deviceResources.GetD3DDevice();
 
     // ----- 頂点バッファの作成 ----- //
     {
@@ -163,7 +157,7 @@ void ShaderTestScene::OnEnter(GameContext& gameContext)
     // 頂点データの構造
     D3D11_INPUT_ELEMENT_DESC layout[] =
     {
-        { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+        { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT,    0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
     };
 
     // ----- 入力レイアウトの作成 ----- //
