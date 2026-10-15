@@ -12,6 +12,7 @@
 #include "GameContext.h"
 #include "../SceneId.h"
 #include <ImaseLib/DebugCamera.h>
+#include <ImaseLib/GridFloor.h>
 
 class ShaderTestScene : public Imase::SceneBase<SceneId, GameContext>
 {
@@ -28,23 +29,40 @@ public:
 
 private:
 
+    // デバッグカメラ
+    std::unique_ptr<Imase::DebugCamera> m_debugCamera;
+
+    // グリッドの床
+    std::unique_ptr<Imase::GridFloor> m_gridFloor;
+
     // 頂点バッファの構造体
-    struct VertexPosition
+    struct VertexPositionTexture
     {
         DirectX::XMFLOAT3 position; // 位置
+        DirectX::XMFLOAT2 texCoord; // テクスチャ座標
     };
 
-    // 定数バッファの構造体
-    struct ConstantBuffer
+    // 定数バッファの構造体（頂点シェーダー用）
+    struct ConstantBufferVS
     {
         DirectX::XMFLOAT4X4 wvp;    // ワールド行列×ビュー行列×プロジェクション行列
+    };
+
+    // 定数バッファの構造体（ピクセルシェーダー用）
+    struct ConstantBufferPS
+    {
+        DirectX::XMFLOAT4 color;    // 色
     };
 
     // 頂点バッファ
     Microsoft::WRL::ComPtr<ID3D11Buffer> m_vertexBuffer;
 
+    // インデックスバッファ
+    Microsoft::WRL::ComPtr<ID3D11Buffer> m_indexBuffer;
+
     // 定数バッファ
-    Microsoft::WRL::ComPtr<ID3D11Buffer> m_constantBuffer;
+    Microsoft::WRL::ComPtr<ID3D11Buffer> m_constantBufferVS;
+    Microsoft::WRL::ComPtr<ID3D11Buffer> m_constantBufferPS;
 
     // 頂点シェーダー
     Microsoft::WRL::ComPtr<ID3D11VertexShader> m_vertexShader;
@@ -55,8 +73,11 @@ private:
     // 入力レイアウト
     Microsoft::WRL::ComPtr<ID3D11InputLayout> m_inputLayout;
 
-    // デバッグカメラ
-    std::unique_ptr<Imase::DebugCamera> m_debugCamera;
+    // 色
+    DirectX::SimpleMath::Color m_color = { 1.0f, 1.0f, 1.0f, 1.0f };
+
+    // シェーダーリソースビュー
+    Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_srv;
 
 };
 
