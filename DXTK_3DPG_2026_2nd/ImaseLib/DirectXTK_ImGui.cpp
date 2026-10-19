@@ -9,6 +9,7 @@
 #include "pch.h"
 
 #include "DirectXTK_ImGui.h"
+#include "ImGui/ImGuizmo.h"
 
 bool Imase::DXTK_ImGui::m_isInitialized = false;
 int Imase::DXTK_ImGui::m_screenWidth = 0;
@@ -78,6 +79,9 @@ void Imase::DXTK_ImGui::Update(HWND hWnd)
         m_screenHeight / static_cast<float>(rect.bottom - rect.top) );
     
     ImGui::NewFrame();
+
+    ImGuizmo::BeginFrame(); // 毎フレーム最初に呼ぶ
+    ImGuizmo::Enable(true); // ギズモの有効化
 
     //  デモウィンドウの描画
 //    ImGui::ShowDemoWindow();

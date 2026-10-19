@@ -151,6 +151,9 @@
     <ClInclude Include="Scene\ShaderTestScene\ShaderTestScene.h">
       <Filter>Scene\ShaderTestScene</Filter>
     </ClInclude>
+    <ClInclude Include="ImGui\ImGuizmo.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -236,6 +239,9 @@
     </ClCompile>
     <ClCompile Include="Scene\ShaderTestScene\ShaderTestScene.cpp">
       <Filter>Scene\ShaderTestScene</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\ImGuizmo.cpp">
+      <Filter>ImGui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
