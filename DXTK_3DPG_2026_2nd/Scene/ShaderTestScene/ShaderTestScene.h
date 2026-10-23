@@ -29,6 +29,9 @@ public:
 
 private:
 
+    // プロジェクション行列
+    DirectX::SimpleMath::Matrix m_projection;
+
     // デバッグカメラ
     std::unique_ptr<Imase::DebugCamera> m_debugCamera;
 
@@ -36,16 +39,19 @@ private:
     std::unique_ptr<Imase::GridFloor> m_gridFloor;
 
     // 頂点バッファの構造体
-    struct VertexPositionTexture
+    struct VertexPositionNormalTexture
     {
         DirectX::XMFLOAT3 position; // 位置
+        DirectX::XMFLOAT3 normal;   // 法線
         DirectX::XMFLOAT2 texCoord; // テクスチャ座標
     };
 
     // 定数バッファの構造体（頂点シェーダー用）
     struct ConstantBufferVS
     {
-        DirectX::XMFLOAT4X4 wvp;    // ワールド行列×ビュー行列×プロジェクション行列
+        DirectX::XMFLOAT4X4 WorldViewProjection;    // ワールド行列×ビュー行列×プロジェクション行列
+        DirectX::XMFLOAT4X4 WorldInverseTranspose;  // ワールド行列の逆転置行列
+        DirectX::XMFLOAT4 LightDirection;           // ライトの方向
     };
 
     // 定数バッファの構造体（ピクセルシェーダー用）
@@ -78,6 +84,9 @@ private:
 
     // シェーダーリソースビュー
     Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_srv;
+
+    // ライトの方向
+    DirectX::SimpleMath::Vector3 m_lightDirection = { 0.0f, -1.0f, 0.0f };
 
 };
 
