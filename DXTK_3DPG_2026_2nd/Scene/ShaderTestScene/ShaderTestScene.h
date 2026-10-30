@@ -38,52 +38,6 @@ private:
     // グリッドの床
     std::unique_ptr<Imase::GridFloor> m_gridFloor;
 
-    // 頂点バッファの構造体
-    struct VertexPositionNormalTexture
-    {
-        DirectX::XMFLOAT3 position; // 位置
-        DirectX::XMFLOAT3 normal;   // 法線
-        DirectX::XMFLOAT2 texCoord; // テクスチャ座標
-    };
-
-    // 定数バッファの構造体（頂点シェーダー用）
-    struct ConstantBufferVS
-    {
-        DirectX::XMFLOAT4X4 WorldViewProjection;    // ワールド行列×ビュー行列×プロジェクション行列
-        DirectX::XMFLOAT4X4 WorldInverseTranspose;  // ワールド行列の逆転置行列
-
-        DirectX::XMFLOAT4 LightDirection;           // ライトの方向
-        DirectX::XMFLOAT4 LightDiffuseColor;        // ライトのディフューズ色
-        DirectX::XMFLOAT4 LightAmbientColor;        // ライトのアンビエント色
-
-        DirectX::XMFLOAT4 DiffuseColor;             // マテリアルのディフューズ色
-        DirectX::XMFLOAT4 AmbientColor;             // マテリアルのアンビエント色
-    };
-
-    // 頂点バッファ
-    Microsoft::WRL::ComPtr<ID3D11Buffer> m_vertexBuffer;
-
-    // インデックスバッファ
-    Microsoft::WRL::ComPtr<ID3D11Buffer> m_indexBuffer;
-
-    // 定数バッファ
-    Microsoft::WRL::ComPtr<ID3D11Buffer> m_constantBufferVS;
-
-    // 頂点シェーダー
-    Microsoft::WRL::ComPtr<ID3D11VertexShader> m_vertexShader;
-
-    // ピクセルシェーダー
-    Microsoft::WRL::ComPtr<ID3D11PixelShader> m_pixelShader;
-
-    // 入力レイアウト
-    Microsoft::WRL::ComPtr<ID3D11InputLayout> m_inputLayout;
-
-    // 色
-    DirectX::SimpleMath::Color m_color = { 1.0f, 1.0f, 1.0f, 1.0f };
-
-    // シェーダーリソースビュー
-    Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_srv;
-
     // ライトの回転クォータニオン
     DirectX::SimpleMath::Quaternion m_lightRotation;
 
@@ -95,6 +49,16 @@ private:
 
     // ライトのアンビエント色
     DirectX::SimpleMath::Color m_lightAmbientColor = { 1.0f, 1.0f, 1.0f, 1.0f };
+
+    // サイコロのモデル
+    std::unique_ptr<DirectX::Model> m_diceModel;
+
+    // 頂点シェーダー
+    Microsoft::WRL::ComPtr<ID3D11VertexShader> m_vertexShader;
+
+    // ピクセルシェーダー
+    Microsoft::WRL::ComPtr<ID3D11PixelShader> m_pixelShader;
+
 
 };
 

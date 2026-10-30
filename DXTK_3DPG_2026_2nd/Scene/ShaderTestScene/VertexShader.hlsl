@@ -1,31 +1,40 @@
 // 定数バッファ
-cbuffer PerFrameCB : register(b0)
+cbuffer Parameters : register(b0)
 {
-    float4x4 WorldViewProjection;   // ワールド行列×ビュー行列×プロジェクション行列
-    float4x4 WorldInverseTranspose; // ワールド行列の逆転置行列
+    float4 DiffuseColor             : packoffset(c0);
+    float3 EmissiveColor            : packoffset(c1);
+    float3 SpecularColor            : packoffset(c2);
+    float SpecularPower             : packoffset(c2.w);
 
-    float4 LightDirection;          // ライトの方向
-    float4 LightDiffuseColor;       // ライトのディフューズ色
-    float4 LightAmbientColor;       // ライトのアンビエント色
+    float3 LightDirection[3]        : packoffset(c3);
+    float3 LightDiffuseColor[3]     : packoffset(c6);
+    float3 LightSpecularColor[3]    : packoffset(c9);
 
-    float4 DiffuseColor;            // マテリアルのディフューズ色
-    float4 AmbientColor;            // マテリアルのアンビエント色
+    float3 EyePosition              : packoffset(c12);
+
+    float3 FogColor                 : packoffset(c13);
+    float4 FogVector                : packoffset(c14);
+
+    float4x4 World                  : packoffset(c15);
+    float3x3 WorldInverseTranspose  : packoffset(c19);
+    float4x4 WorldViewProj          : packoffset(c22);
 };
 
 // 頂点シェーダーの入力用
 struct VSInput
 {
-    float3 Position : POSITION; // 位置
-    float3 Normal   : NORMAL;   // 法線
-    float2 TexCoord : TEXCOORD; // テクスチャ座標
+    float4 Position : SV_Position;
+    float3 Normal   : NORMAL;
+    float2 TexCoord : TEXCOORD0;
+    float4 Color    : COLOR;
 };
 
 // 頂点シェーダーの出力用
 struct VSOutput
 {
-    float4 Position : SV_POSITION;  // 位置
-    float4 Diffuse  : COLOR0;       // ディフューズ色
-    float2 TexCoord : TEXCOORD;     // テクスチャ座標
+    float4 Position     : SV_POSITION;  // 位置
+    float4 Diffuse      : COLOR0;       // ディフューズ色
+    float2 TexCoord     : TEXCOORD;     // テクスチャ座標
 };
 
 VSOutput main(VSInput vin)
@@ -33,15 +42,13 @@ VSOutput main(VSInput vin)
     VSOutput vout;
 
     // 座標変換    
-    vout.Position = mul(WorldViewProjection, float4(vin.Position, 1.0f));
+    vout.Position = mul(vin.Position, WorldViewProj);
 
-    float4 diffuse = DiffuseColor * LightDiffuseColor;
-    float4 ambient = AmbientColor * LightAmbientColor;
-    
     // ライトの色
-    float3 N = normalize(mul((float3x3)WorldInverseTranspose, vin.Normal));
-    float3 L = normalize(-LightDirection.xyz);
-    vout.Diffuse = diffuse * saturate(dot(N, L)) + ambient;
+    float3 N = normalize(mul(vin.Normal, WorldInverseTranspose));
+    float3 L = normalize(-LightDirection[0]);
+    float3 diffuse = LightDiffuseColor[0] * saturate(dot(N, L)) * DiffuseColor.rgb + EmissiveColor;
+    vout.Diffuse = float4(diffuse, DiffuseColor.a);
     
     // テクスチャ座標
     vout.TexCoord = vin.TexCoord;
