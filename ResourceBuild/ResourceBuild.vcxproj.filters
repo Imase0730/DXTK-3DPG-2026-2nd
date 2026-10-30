@@ -16,4 +16,9 @@
   <ItemGroup>
     <Text Include="TOOLS\CmoPathCutの使い方.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <MeshContentTask Include="Models\Dice.obj">
+      <Filter>Models</Filter>
+    </MeshContentTask>
+  </ItemGroup>
 </Project>

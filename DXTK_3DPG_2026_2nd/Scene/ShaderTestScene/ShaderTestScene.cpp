@@ -10,6 +10,7 @@
 #include "ShaderTestScene.h"
 
 #include <DirectXTK_Utilities/ReadData.h>
+#include <ImGui/ImGuizmo.h>
 
 using namespace DirectX;
 
@@ -22,12 +23,47 @@ void ShaderTestScene::Update(Imase::ISceneController<SceneId>& sceneController, 
 
     // ImGuiを使って、色を変更する
     std::vector<float> v;
-    v = { m_color.x, m_color.y, m_color.z };
-    ImGui::ColorEdit3("VertexColor", v.data());
-    m_color = { v[0], v[1], v[2] };
 
-    // デバッグカメラの更新
-    m_debugCamera->Update(!ImGui::IsWindowFocused(ImGuiFocusedFlags_ChildWindows));
+    // ライトのディフューズ色
+    v = { m_lightDiffuseColor.x, m_lightDiffuseColor.y, m_lightDiffuseColor.z };
+    ImGui::ColorEdit3("LightDiffuseColor", v.data());
+    m_lightDiffuseColor = { v[0], v[1], v[2] };
+
+    // ライトのアンビエント色
+    v = { m_lightAmbientColor.x, m_lightAmbientColor.y, m_lightAmbientColor.z };
+    ImGui::ColorEdit3("LightAmbientColor", v.data());
+    m_lightAmbientColor = { v[0], v[1], v[2] };
+
+    // ギズモの表示領域を画面全体に設定
+    ImGuiIO& io = ImGui::GetIO();
+    ImGuizmo::SetRect(0, 0, io.DisplaySize.x, io.DisplaySize.y);
+    
+    // ギズモの大きさを調整
+    ImGuizmo::SetGizmoSizeClipSpace(0.2f);
+
+    // クォータニオンからギズモ用のワールド行列を作成
+    SimpleMath::Matrix lightMatrix = SimpleMath::Matrix::CreateFromQuaternion(m_lightRotation);
+    SimpleMath::Matrix viewGizumo = m_debugCamera->GetCameraMatrix();
+    SimpleMath::Matrix projGizumo = m_projection;
+
+    // ギズモの描画と操作
+    ImGuizmo::Manipulate(
+        &viewGizumo.m[0][0],
+        &projGizumo.m[0][0],
+        ImGuizmo::ROTATE,
+        ImGuizmo::WORLD,
+        &lightMatrix.m[0][0]
+    );
+
+    // 回転行列をクォータニオンに戻す
+    m_lightRotation = SimpleMath::Quaternion::CreateFromRotationMatrix(lightMatrix);
+    // ライトの初期方向を「真下（　0,　-1,　0　）」とし、現在の回転を適応する
+    SimpleMath::Vector3 defaultLightDirection = SimpleMath::Vector3(0.0f, -1.0f, 0.0f);
+    m_lightDirection = SimpleMath::Vector3::Transform(defaultLightDirection, m_lightRotation);
+    m_lightDirection.Normalize();
+
+    // デバッグカメラの更新（ImGuiまたはImGuizmoの上ならカメラは動かない）
+    m_debugCamera->Update(!(ImGui::IsWindowFocused(ImGuiFocusedFlags_ChildWindows) || ImGuizmo::IsOver()));
 
     ImGui::End();
 
@@ -83,23 +119,28 @@ void ShaderTestScene::Render(GameContext& gameContext)
     bufVS.WorldViewProjection = world * view * m_projection;
     // ワールド行列の逆転置行列
     XMStoreFloat4x4(&bufVS.WorldInverseTranspose, XMMatrixTranspose(XMMatrixInverse(nullptr, world)));
+
     // ライトの方向
     bufVS.LightDirection = XMFLOAT4(m_lightDirection.x, m_lightDirection.y, m_lightDirection.z, 1.0f);
+    // ライトのディフューズ色
+    bufVS.LightDiffuseColor = XMFLOAT4(m_lightDiffuseColor.x, m_lightDiffuseColor.y, m_lightDiffuseColor.z, 1.0f);
+    // ライトのアンビエント色
+    bufVS.LightAmbientColor = XMFLOAT4(m_lightAmbientColor.x, m_lightAmbientColor.y, m_lightAmbientColor.z, 1.0f);
+
+    // マテリアルのディフューズ色
+    bufVS.DiffuseColor = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+    // マテリアルのアンビエント色
+    bufVS.AmbientColor = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+
     context->Map(m_constantBufferVS.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &subresource);
     memcpy(subresource.pData, &bufVS, sizeof(ConstantBufferVS));
     context->Unmap(m_constantBufferVS.Get(), 0);
 
-    // 定数バッファの更新（ピクセルシェーダー用）
-    ConstantBufferPS bufPS = { m_color };
-    context->Map(m_constantBufferPS.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &subresource);
-    memcpy(subresource.pData, &bufPS, sizeof(ConstantBufferPS));
-    context->Unmap(m_constantBufferPS.Get(), 0);
-
-    ID3D11Buffer* cstBuffers[] = { m_constantBufferVS.Get(), m_constantBufferPS.Get() };
+    ID3D11Buffer* cstBuffers[] = { m_constantBufferVS.Get() };
 
     // ----- VS（頂点シェーダー） ----- //
     // 定数バッファの設定
-    context->VSSetConstantBuffers(0, 2, cstBuffers);
+    context->VSSetConstantBuffers(0, 1, cstBuffers);
     // 頂点シェーダーの設定
     context->VSSetShader(m_vertexShader.Get(), nullptr, 0);
 
@@ -114,8 +155,6 @@ void ShaderTestScene::Render(GameContext& gameContext)
     // サンプラーの設定
     ID3D11SamplerState* samplers[] = { gameContext.commonStates.PointClamp() };
     context->PSSetSamplers(0, 1, samplers);
-    // 定数バッファの設定
-    context->PSSetConstantBuffers(0, 2, cstBuffers);
     // ピクセルシェーダーの設定
     context->PSSetShader(m_pixelShader.Get(), nullptr, 0);
 
@@ -245,12 +284,6 @@ void ShaderTestScene::OnEnter(GameContext& gameContext)
         desc.ByteWidth = sizeof(ConstantBufferVS);      // バッファのサイズ
         DX::ThrowIfFailed(
             device->CreateBuffer(&desc, nullptr, m_constantBufferVS.ReleaseAndGetAddressOf())
-        );
-
-        // ピクセルシェーダー用
-        desc.ByteWidth = sizeof(ConstantBufferPS);      // バッファのサイズ
-        DX::ThrowIfFailed(
-            device->CreateBuffer(&desc, nullptr, m_constantBufferPS.ReleaseAndGetAddressOf())
         );
     }
 

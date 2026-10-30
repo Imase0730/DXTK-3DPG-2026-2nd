@@ -51,13 +51,13 @@ private:
     {
         DirectX::XMFLOAT4X4 WorldViewProjection;    // ワールド行列×ビュー行列×プロジェクション行列
         DirectX::XMFLOAT4X4 WorldInverseTranspose;  // ワールド行列の逆転置行列
-        DirectX::XMFLOAT4 LightDirection;           // ライトの方向
-    };
 
-    // 定数バッファの構造体（ピクセルシェーダー用）
-    struct ConstantBufferPS
-    {
-        DirectX::XMFLOAT4 color;    // 色
+        DirectX::XMFLOAT4 LightDirection;           // ライトの方向
+        DirectX::XMFLOAT4 LightDiffuseColor;        // ライトのディフューズ色
+        DirectX::XMFLOAT4 LightAmbientColor;        // ライトのアンビエント色
+
+        DirectX::XMFLOAT4 DiffuseColor;             // マテリアルのディフューズ色
+        DirectX::XMFLOAT4 AmbientColor;             // マテリアルのアンビエント色
     };
 
     // 頂点バッファ
@@ -68,7 +68,6 @@ private:
 
     // 定数バッファ
     Microsoft::WRL::ComPtr<ID3D11Buffer> m_constantBufferVS;
-    Microsoft::WRL::ComPtr<ID3D11Buffer> m_constantBufferPS;
 
     // 頂点シェーダー
     Microsoft::WRL::ComPtr<ID3D11VertexShader> m_vertexShader;
@@ -85,8 +84,17 @@ private:
     // シェーダーリソースビュー
     Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_srv;
 
+    // ライトの回転クォータニオン
+    DirectX::SimpleMath::Quaternion m_lightRotation;
+
     // ライトの方向
-    DirectX::SimpleMath::Vector3 m_lightDirection = { 0.0f, -1.0f, 0.0f };
+    DirectX::SimpleMath::Vector3 m_lightDirection;
+
+    // ライトのディフューズ色
+    DirectX::SimpleMath::Color m_lightDiffuseColor = { 1.0f, 1.0f, 1.0f, 1.0f };
+
+    // ライトのアンビエント色
+    DirectX::SimpleMath::Color m_lightAmbientColor = { 1.0f, 1.0f, 1.0f, 1.0f };
 
 };
 

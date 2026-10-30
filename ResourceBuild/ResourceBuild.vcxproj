@@ -26,6 +26,9 @@
   <ItemGroup>
     <Text Include="TOOLS\CmoPathCutの使い方.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <MeshContentTask Include="Models\Dice.obj" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>18.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
