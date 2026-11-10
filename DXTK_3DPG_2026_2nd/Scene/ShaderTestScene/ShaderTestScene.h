@@ -59,6 +59,11 @@ private:
     // ピクセルシェーダー
     Microsoft::WRL::ComPtr<ID3D11PixelShader> m_pixelShader;
 
+    // モデルを自作のシェーダーで描画するように切り替えるフラグ
+    bool m_flag = false;
+
+    // 球のモデル
+    std::unique_ptr<DirectX::Model> m_sphereModel;
 
 };
 

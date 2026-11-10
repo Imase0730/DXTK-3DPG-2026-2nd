@@ -25,7 +25,6 @@ struct VSInput
 {
     float4 Position : SV_Position;
     float3 Normal   : NORMAL;
-    float2 TexCoord : TEXCOORD0;
     float4 Color    : COLOR;
 };
 
@@ -34,7 +33,7 @@ struct VSOutput
 {
     float4 Position     : SV_POSITION;  // 位置
     float4 Diffuse      : COLOR0;       // ディフューズ色
-    float2 TexCoord     : TEXCOORD;     // テクスチャ座標
+    float3 Specular     : COLOR1;       // スペキュラー色
 };
 
 VSOutput main(VSInput vin)
@@ -44,14 +43,21 @@ VSOutput main(VSInput vin)
     // 座標変換    
     vout.Position = mul(vin.Position, WorldViewProj);
 
-    // ライトの色
+    // 平行光源のディフューズ色
     float3 N = normalize(mul(vin.Normal, WorldInverseTranspose));
     float3 L = normalize(-LightDirection[0]);
-    float3 diffuse = LightDiffuseColor[0] * saturate(dot(N, L)) * DiffuseColor.rgb + EmissiveColor;
+    float dotL = dot(N, L);
+    float zeroL = step(0, dotL);
+    float3 diffuse = zeroL * dotL * LightDiffuseColor[0] * DiffuseColor.rgb + EmissiveColor;
     vout.Diffuse = float4(diffuse, DiffuseColor.a);
     
-    // テクスチャ座標
-    vout.TexCoord = vin.TexCoord;
+    // スペキュラー色
+    float3 position_ws = mul(vin.Position, World).xyz;      // ワールド空間の頂点の位置
+    float3 eyeVector = normalize(EyePosition - position_ws);
+    float3 H = normalize(eyeVector - LightDirection[0]);    // ハーフベクトル
+    float dotH = dot(N, H);
+    float specularIntensity = pow(max(dotH, 0) * zeroL, SpecularPower) * dotL;
+    vout.Specular = specularIntensity * LightSpecularColor[0] * SpecularColor;
     
     return vout;
 }

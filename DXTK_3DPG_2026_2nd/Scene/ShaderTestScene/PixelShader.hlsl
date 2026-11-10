@@ -9,10 +9,12 @@ struct PSInput
 {
     float4 Position     : SV_POSITION;  // 位置
     float4 Diffuse      : COLOR0;       // ディフューズ色
-    float2 TexCoord     : TEXCOORD;     // テクスチャ座標
+    float3 Specular     : COLOR1;       // スペキュラー色
 };
 
 float4 main(PSInput pin) : SV_TARGET
 {
-    return pin.Diffuse * Texture.Sample(Sampler, pin.TexCoord);
+    pin.Diffuse.rgb += pin.Specular * pin.Diffuse.a;
+
+    return pin.Diffuse;
 }

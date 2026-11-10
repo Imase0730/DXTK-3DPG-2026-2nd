@@ -67,6 +67,12 @@ void ShaderTestScene::Update(Imase::ISceneController<SceneId>& sceneController, 
 
     ImGui::End();
 
+    // スペースキーで自作のシェーダーで描画するように切り替える
+    if (gameContext.keyboardTracker.pressed.Space)
+    {
+        m_flag = !m_flag;
+    }
+
     debugRenderer.DrawText({ 0.0f, 0.0f }, L"ShaderTestScene");
 }
 
@@ -95,7 +101,7 @@ void ShaderTestScene::Render(GameContext& gameContext)
     m_gridFloor->Render(context, view, m_projection);
 
     // ライトの設定
-    m_diceModel->UpdateEffects([&](IEffect* effect)
+    m_sphereModel->UpdateEffects([&](IEffect* effect)
         {
             auto lights = dynamic_cast<IEffectLights*>(effect);
             if (lights)
@@ -107,16 +113,20 @@ void ShaderTestScene::Render(GameContext& gameContext)
         }
     );
 
-    // サイコロの描画
-    m_diceModel->Draw(context, gameContext.commonStates, world, view, m_projection, false, [&]()
+    // 球の描画
+    m_sphereModel->Draw(context, gameContext.commonStates, world, view, m_projection, false, [&]()
         {
-            // ----- VS（頂点シェーダー） ----- //
-            // 頂点シェーダーの設定
-            context->VSSetShader(m_vertexShader.Get(), nullptr, 0);
+            // 自作のシェーダーで描画するか？
+            if (m_flag)
+            {
+                // ----- VS（頂点シェーダー） ----- //
+                // 頂点シェーダーの設定
+                context->VSSetShader(m_vertexShader.Get(), nullptr, 0);
 
-            // ----- PS（ピクセルシェーダー） ----- //
-            // ピクセルシェーダーの設定
-            context->PSSetShader(m_pixelShader.Get(), nullptr, 0);
+                // ----- PS（ピクセルシェーダー） ----- //
+                // ピクセルシェーダーの設定
+                context->PSSetShader(m_pixelShader.Get(), nullptr, 0);
+            }
         }
     );
 }
@@ -143,6 +153,21 @@ void ShaderTestScene::OnEnter(GameContext& gameContext)
         {
             auto lights = dynamic_cast<IEffectLights*>(effect);
             if(lights)
+            {
+                lights->SetLightEnabled(1, false);
+                lights->SetLightEnabled(2, false);
+            }
+        }
+    );
+
+    // 球のモデルの読み込み
+    m_sphereModel = Model::CreateFromCMO(device, L"Resources/Models/Sphere.cmo", fx);
+
+    // ライトの０番はON、１番と２番はOFFにする
+    m_sphereModel->UpdateEffects([&](IEffect* effect)
+        {
+            auto lights = dynamic_cast<IEffectLights*>(effect);
+            if (lights)
             {
                 lights->SetLightEnabled(1, false);
                 lights->SetLightEnabled(2, false);

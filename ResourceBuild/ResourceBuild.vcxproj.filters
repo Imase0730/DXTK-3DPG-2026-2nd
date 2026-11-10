@@ -20,5 +20,8 @@
     <MeshContentTask Include="Models\Dice.obj">
       <Filter>Models</Filter>
     </MeshContentTask>
+    <MeshContentTask Include="Models\Sphere.obj">
+      <Filter>Models</Filter>
+    </MeshContentTask>
   </ItemGroup>
 </Project>

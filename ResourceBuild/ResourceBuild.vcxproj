@@ -28,6 +28,7 @@
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Models\Dice.obj" />
+    <MeshContentTask Include="Models\Sphere.obj" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>18.0</VCProjectVersion>
