@@ -171,6 +171,7 @@ void ShaderTestScene::OnEnter(GameContext& gameContext)
             {
                 lights->SetLightEnabled(1, false);
                 lights->SetLightEnabled(2, false);
+                lights->SetPerPixelLighting(true);
             }
         }
     );

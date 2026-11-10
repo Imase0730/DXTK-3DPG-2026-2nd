@@ -25,6 +25,7 @@ struct VSInput
 {
     float4 Position : SV_Position;
     float3 Normal   : NORMAL;
+//    float2 TexCoord : TEXCOORD0;
     float4 Color    : COLOR;
 };
 
@@ -32,33 +33,46 @@ struct VSInput
 struct VSOutput
 {
     float4 Position     : SV_POSITION;  // 位置
-    float4 Diffuse      : COLOR0;       // ディフューズ色
-    float3 Specular     : COLOR1;       // スペキュラー色
+    float3 PositionWS   : TEXCOORD0;    // ワールド空間の位置
+    float3 NormalWS     : TEXCOORD1;    // ワールド空間の法線
 };
 
 VSOutput main(VSInput vin)
 {
     VSOutput vout;
 
-    // 座標変換    
     vout.Position = mul(vin.Position, WorldViewProj);
-
-    // 平行光源のディフューズ色
-    float3 N = normalize(mul(vin.Normal, WorldInverseTranspose));
-    float3 L = normalize(-LightDirection[0]);
-    float dotL = dot(N, L);
-    float zeroL = step(0, dotL);
-    float3 diffuse = zeroL * dotL * LightDiffuseColor[0] * DiffuseColor.rgb + EmissiveColor;
-    vout.Diffuse = float4(diffuse, DiffuseColor.a);
-    
-    // スペキュラー色
-    float3 position_ws = mul(vin.Position, World).xyz;      // ワールド空間の頂点の位置
-    float3 eyeVector = normalize(EyePosition - position_ws);
-    float3 H = normalize(eyeVector - LightDirection[0]);    // ハーフベクトル
-    float dotH = dot(N, H);
-    float specularIntensity = pow(max(dotH, 0) * zeroL, SpecularPower) * dotL;
-    vout.Specular = specularIntensity * LightSpecularColor[0] * SpecularColor;
-    
+    vout.PositionWS = mul(vin.Position, World).xyz;
+    vout.NormalWS = mul(vin.Normal, WorldInverseTranspose);
+   
     return vout;
 }
+    
+    
+    
+    
+//     座標変換    
+//    vout.Position = mul(vin.Position, WorldViewProj);
+
+//     平行光源のディフューズ色
+//    float3 N = normalize(mul(vin.Normal, WorldInverseTranspose));
+//    float3 L = normalize(-LightDirection[0]);
+//    float dotL = dot(N, L);
+//    float zeroL = step(0, dotL);
+//    float3 diffuse = zeroL * dotL * LightDiffuseColor[0] * DiffuseColor.rgb + EmissiveColor;
+//    vout.Diffuse = float4(diffuse, DiffuseColor.a);
+    
+//     スペキュラー色
+//    float3 position_ws = mul(vin.Position, World).xyz;      // ワールド空間の頂点の位置
+//    float3 eyeVector = normalize(EyePosition - position_ws);
+//    float3 H = normalize(eyeVector - LightDirection[0]);    // ハーフベクトル
+//    float dotH = dot(N, H);
+//    float specularIntensity = pow(max(dotH, 0) * zeroL, SpecularPower) * dotL;
+//    vout.Specular = specularIntensity * LightSpecularColor[0] * SpecularColor;
+    
+//     テクスチャ座標
+//    vout.TexCoord = vin.TexCoord;
+    
+//    return vout;
+//}
 
